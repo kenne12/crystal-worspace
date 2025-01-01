@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgis/postgis:17-3.5
+    container_name: postgres-postgis
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: test_db
+    ports:
+      - "5436:5432"
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  geo-position-service:
+    container_name: geo-position-service
+    build:
+      context: ./geopoint-api
+      dockerfile: Dockerfile
+    ports:
+      - "9020:9020"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-postgis:5432/test_db
+      SPRING_DATASOURCE_USERNAME: myuser
+      SPRING_DATASOURCE_PASSWORD: mypassword
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+
+  geo-position-ui:
+    container_name: geo-position-ui
+    build:
+      context: ./geopoint-ui
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    depends_on:
+      - geo-position-service
+    networks:
+      - app-network
+    
+networks:
+  app-network:
+    driver: bridge

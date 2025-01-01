@@ -1,0 +1,17 @@
+/postgres_data
+/.idea
+
+# Ignorer les dossiers "node_modules"
+**/node_modules/
+
+# Ignorer les dossiers "target"
+**/target/
+
+# Ignorer les fichiers JAR
+**/*.jar
+
+# Ignorer le dossier ".angular"
+**/.angular/
+
+# Ignorer les dossiers "dist"
+**/dist/

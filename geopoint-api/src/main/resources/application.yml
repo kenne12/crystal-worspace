@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: test_db
+  datasource:
+    url: jdbc:postgresql://localhost:5436/test_db
+    username: myuser
+    password: mypassword
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/master.xml
+#  jpa:
+#    hibernate:
+#      ddl-auto: validate
+server:
+  port: 9020
+#  servlet:
+#    context-path: /api/v1
+
+logging:
+  level:
+    org.springframework.web: DEBUG

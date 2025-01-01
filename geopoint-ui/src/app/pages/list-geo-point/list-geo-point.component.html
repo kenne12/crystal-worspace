@@ -1,0 +1,104 @@
+@if (geoPointPage()?.content?.length! > 0) {
+  <div class="card border-primary mt-3">
+    <div class="card-body">
+      <form class="search-bar mt-3">
+        <label class="form-label">Point A</label>
+
+        <div class="col">
+          <select class="form-select form-select-lg mb-3"
+                  [(ngModel)]="pointIdA" [ngModelOptions]="{standalone: true}">
+            @for (geoPoint of geoPointPage()!.content; track geoPoint.id) {
+              <option value="{{ geoPoint.id }}">{{ geoPoint.title }}</option>
+            }
+          </select>
+        </div>
+
+        <label class="form-label">Point B</label>
+
+        <div class="col">
+          <select class="form-select form-select-lg mb-3"
+                  [(ngModel)]="pointIdB" [ngModelOptions]="{standalone: true}">
+            @for (geoPoint of geoPointPage()!.content!; track geoPoint.id) {
+              <option [value]="geoPoint.id">{{ geoPoint.title }}</option>
+            }
+          </select>
+        </div>
+        @if (pointIdA() && pointIdB() && pointIdA() !== pointIdB()) {
+          <button type="button" class="btn btn-primary"
+                  (click)="onCompute()"
+                  [disabled]="isComputing()">
+            @if (isComputing()) {
+              <i class="pi pi-spin pi-spinner" style="font-size: 1rem"></i>
+              Computing ...
+            } @else {
+              <i class="pi pi-save" style="font-size: 1rem"></i>
+              Compute
+            }
+          </button>
+        }
+
+        @if (distance()) {
+          <div class="col">
+            @if (distance() > 10) {
+              <span class="badge text-bg-primary">{{ distance() }} > à 10 km</span>
+            } @else {
+              <span class="badge text-bg-warning">{{ distance() }} < 10 km</span>
+            }
+          </div>
+        }
+      </form>
+    </div>
+  </div>
+  <div class="card border-primary mt-3">
+    <div class="card-header">Liste des points de repère</div>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Longitude</th>
+          <th scope="col">Latitude</th>
+          <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (geoPoint of geoPointPage()!.content; track geoPoint.id; let i = $index) {
+            <tr>
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{ geoPoint.title }}</td>
+              <td>{{ geoPoint.longitude }}</td>
+              <td>{{ geoPoint.latitude }}</td>
+              <td>
+                <button type="button" class="btn btn-danger btn-sm" (click)="onDeleteGeoPoint(geoPoint!)">
+                  <i class="pi pi-pencil"></i>
+                  Delete
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <nav aria-label="...">
+        <ul class="pagination">
+          <li class="page-item cursor-pointer" [class.disabled]="geoPointPage()!.page?.number === 0">
+            <a class="page-link" (click)="previousPage()">Previous</a>
+          </li>
+          @for (counter of paginationArray(); track counter) {
+            <li class="page-item cursor-pointer" [class.active]="geoPointPage()!.page?.number === counter"
+                aria-current="page">
+              <a class="page-link" (click)="$event.preventDefault(); goToPage(counter)">{{ counter + 1 }}</a>
+            </li>
+          }
+          <li class="page-item cursor-pointer"
+              [class.disabled]="geoPointPage()!.page!.number === (geoPointPage()!.page!.totalPages! - 1)">
+            <a class="page-link" (click)="nextPage()">Next</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+}
+

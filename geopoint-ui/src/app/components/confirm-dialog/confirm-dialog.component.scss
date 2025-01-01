@@ -1,0 +1,19 @@
+.confirm-title {
+  text-align: center;
+  font-size: 18px;
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: space-evenly;
+
+  .confirm-button {
+    background-color: var(--primary-color);
+    color: #ffffff;
+  }
+
+  .cancel-button {
+    background-color: gray;
+    color: #ffffff;
+  }
+}

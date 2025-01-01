@@ -1,0 +1,58 @@
+<div class="mt-3 add-form">
+  <div class="card border-primary">
+    <div class="card-header">New Point Form</div>
+    <div class="card-body">
+      <form [formGroup]="positionForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3 ">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" class="form-control" id="title"
+                 placeholder="Place title"
+                 formControlName="title"
+          />
+          @if (!positionForm?.controls?.title?.untouched && !positionForm?.controls?.title?.valid) {
+            <mat-hint class="text-danger">
+              Veuillez saisir le titre
+            </mat-hint>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label for="longitude" class="form-label">Longitude</label>
+          <input type="number" class="form-control" id="longitude"
+                 placeholder="Longitude"
+                 formControlName="longitude"/>
+          @if (!positionForm?.controls?.longitude?.untouched && !positionForm.controls?.longitude?.valid) {
+            <mat-hint class="text-danger">
+              Veuillez saisir la longitude
+            </mat-hint>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label for="latitude" class="form-label">Latitude</label>
+          <input type="number" class="form-control" id="latitude"
+                 placeholder="Another input placeholder"
+                 formControlName="latitude"/>
+          @if (!positionForm?.controls?.latitude?.untouched && !positionForm.controls?.latitude?.valid) {
+            <mat-hint class="text-danger">
+              Veuillez saisir la longitude
+            </mat-hint>
+          }
+        </div>
+
+        <button type="submit" class="btn btn-primary"
+                [disabled]="positionForm.untouched || positionForm.invalid || isLoading()">
+          @if (isLoading()) {
+            <i class="pi pi-spin pi-spinner" style="font-size: 1rem"></i>
+            Saving ...
+          } @else {
+            <i class="pi pi-save" style="font-size: 1rem"></i>
+            Save
+          }
+        </button>
+      </form>
+    </div>
+  </div>
+
+</div>
+

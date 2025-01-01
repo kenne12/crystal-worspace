@@ -1,0 +1,19 @@
+<div mat-dialog-title>
+  Confirmation
+</div>
+
+<div mat-dialog-content>
+  <h2>{{data.message}}</h2>
+</div>
+
+<div mat-dialog-actions class="confirm-actions">
+  <button mat-raised-button class="cancel-button" [mat-dialog-close]="false">
+    <mat-icon>cancel</mat-icon>
+    Non
+  </button>
+
+  <button mat-raised-button color="primary" [mat-dialog-close]="true">
+    <mat-icon>task_alt</mat-icon>
+    Oui
+  </button>
+</div>

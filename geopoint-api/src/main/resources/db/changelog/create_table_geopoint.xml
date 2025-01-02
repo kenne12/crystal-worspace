@@ -10,12 +10,18 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
 
-            <column name="title" type="varchar(100)"/>
+            <column name="title" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
 
-            <column name="point" type="geometry">
+            <column name="point" type="geometry(Point, 4326)">
                 <constraints nullable="true"/>
             </column>
         </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="gervais_kenne">
+        <sqlFile path="db/changelog/data/init_db.sql"/>
     </changeSet>
 
 </databaseChangeLog>

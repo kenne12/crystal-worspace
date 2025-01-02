@@ -37,6 +37,7 @@ services:
         condition: service_healthy
     networks:
       - app-network
+    restart: always
 
   geo-position-ui:
     container_name: geo-position-ui

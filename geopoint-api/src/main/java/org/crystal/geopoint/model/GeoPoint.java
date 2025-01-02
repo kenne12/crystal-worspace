@@ -6,6 +6,7 @@ import lombok.*;
 import org.locationtech.jts.geom.Point;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
@@ -16,13 +17,14 @@ import java.io.Serializable;
 @Builder
 @EqualsAndHashCode(exclude = {"title"})
 @Table(name = "geo_point")
+// TODO: determine how object is equal to another object
 public class GeoPoint implements Serializable {
-
+    // TODO: change to UUID
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     @NotEmpty(message = "Title is required")
     private String title;
 

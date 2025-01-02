@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -44,18 +45,15 @@ public class GeoPointServiceImpl implements GeoPointService {
 
         return new PageDTO<>(
                 all.getContent().stream().map(GeoPointDTO::fromEntity).toList(),
-                new PageDTO.Pagination(all.getNumber(), all.getSize(), all.getTotalElements(),all.getTotalPages())
+                new PageDTO.Pagination(all.getNumber(), all.getSize(), all.getTotalElements(), all.getTotalPages())
         );
     }
 
     @Override
     public double computeDistance(String geoPointIdA, String geoPointIdB) {
-
-        geoPointRepository.findById(geoPointIdA)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("GeoPoint not found with id => %s", geoPointIdA)));
-
-        geoPointRepository.findById(geoPointIdB)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("GeoPoint not found with id => %s", geoPointIdB)));
+        if (geoPointRepository.findAllById(List.of(geoPointIdA, geoPointIdB)).size() != 2) {
+            throw new EntityNotFoundException(String.format("GeoPoints not found with id => %s or %s", geoPointIdA, geoPointIdB));
+        }
 
         return geoPointRepository.findDistance(geoPointIdA, geoPointIdB) / 1000;
     }

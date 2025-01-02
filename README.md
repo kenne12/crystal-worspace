@@ -31,7 +31,7 @@ This is a full-stack application built with Spring Boot (backend) and Angular (f
 3. Run the following command:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 This will start both the frontend and backend services, along with the database.

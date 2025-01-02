@@ -23,7 +23,7 @@ export class ListGeoPointComponent implements OnInit {
 
   private pageRequest = signal<Pagination>({
     page: 0,
-    size: 2,
+    size: 10,
   });
 
   public distance = signal<number>(0);

@@ -111,11 +111,7 @@ public class GeoPointServiceTest {
         GeoPoint geoPointB = new GeoPoint("456", "GeoPoint B", pointB);
         double distanceInMeters = 3000;
 
-        when(geoPointRepository.findById("123"))
-                .thenReturn(Optional.of(geoPointA));
-
-        when(geoPointRepository.findById("456"))
-                .thenReturn(Optional.of(geoPointB));
+        when(geoPointRepository.findAllById(List.of("123", "456"))).thenReturn(List.of(geoPointA, geoPointB));
 
         when(geoPointRepository.findDistance("123", "456")).thenReturn(distanceInMeters);
 
@@ -130,11 +126,11 @@ public class GeoPointServiceTest {
         String geoPointIdA = "123";
         String geoPointIdB = "456";
 
-        when(geoPointRepository.findById(geoPointIdA)).thenReturn(Optional.empty());
+        when(geoPointRepository.findAllById(List.of(geoPointIdA, geoPointIdB))).thenReturn(List.of());
 
         Exception exception = assertThrows(EntityNotFoundException.class, () -> geoPointService.computeDistance(geoPointIdA, geoPointIdB));
 
-        assertEquals("GeoPoint not found with id => " + geoPointIdA, exception.getMessage());
+        assertEquals(String.format("GeoPoints not found with id => %s or %s", geoPointIdA, geoPointIdB), exception.getMessage());
         verify(geoPointRepository, never()).findDistance(anyString(), anyString());
     }
 

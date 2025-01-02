@@ -14,6 +14,12 @@ services:
       - ./postgres_data:/var/lib/postgresql/data
     networks:
       - app-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U myuser -d test_db" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   geo-position-service:
     container_name: geo-position-service
@@ -27,7 +33,8 @@ services:
       SPRING_DATASOURCE_USERNAME: myuser
       SPRING_DATASOURCE_PASSWORD: mypassword
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     networks:
       - app-network
 
@@ -42,7 +49,7 @@ services:
       - geo-position-service
     networks:
       - app-network
-    
+
 networks:
   app-network:
     driver: bridge

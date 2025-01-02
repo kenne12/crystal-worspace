@@ -2,7 +2,7 @@ FROM maven:3-eclipse-temurin-21 AS build
 WORKDIR /app
 
 COPY pom.xml /app
-#RUN mvn dependency:resolve
+RUN mvn dependency:resolve
 COPY . /app
 RUN mvn clean
 RUN mvn clean package -DskipTests

@@ -1,4 +1,4 @@
-# GPS Coordinate Tracking System
+# GPS Coordinate Management System
 
 ## Project Description
 
@@ -63,8 +63,9 @@ The complete API documentation is available through Swagger UI at:
 
 Key endpoints:
 - `GET /api/v1/geo-points?page={pageNumber}&size={pageSize}` - List all coordinates
-- `POST /api/v1/geo-points` - Add new coordinate
+- `POST /api/v1/geo-points` - Add new Gps coordinate
 - `GET /api/v1/geo-points/compute-distance?geoPointIdA={id1}&geoPointIdB={id2}` - Calculate distance between two coordinates
+- `DELETE /api/v1/geo-points/{geoPointId}` - Delete a Gps coordinate
 
 ## Running Tests
 
@@ -100,3 +101,13 @@ ng serve
 - The frontend development server runs on port 4200
 - All API endpoints are prefixed with `/api/v1`
 - The application uses RESTful conventions for API endpoints
+
+
+## Appearance
+- List of Gps Coordinates
+
+![GeoPoint UI](docs/list.png)
+
+- New Gps Coordinate Form
+
+![GeoPoint UI](docs/add-form.png)
